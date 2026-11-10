@@ -1,0 +1,2 @@
+# SyntheIce-Synthetic-Radargram-Annotation-Benchmark-for-Englacial-Layer-Reconstruction
+SyntheIce: A Synthetic Radargram Annotation Benchmark for Englacial Layer Reconstruction. Algorithmic/procedural radargram annotation generation with pixel-exact layer masks, fragment-level annotations, and full generation metadata, built to train and evaluate layer-tracing models on Greenland ice-sheet radar data.
