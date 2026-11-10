@@ -4,10 +4,6 @@
 *Proc. 2026 IEEE International Conference on Big Data (BigData)*, Phoenix, AZ, USA, Dec. 2026
 
 
-
-Muhammad Behroze Hassan, Bayu Adhi Tama, Sanjay Purushotham, Vandana P. Janeja
-Department of Information Systems and NSF HDR Institute iHARP, University of Maryland, Baltimore County
-
 > Looking for the experiments (XCheck, TraceLink, evaluation)? They live in the companion repository: **[SyntheIce-Experiments](https://github.com/iharp-institute/SyntheIce-Englacial-Layer-Reconstruction)**.
 
 ---
