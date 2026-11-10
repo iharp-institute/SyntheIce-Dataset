@@ -225,7 +225,7 @@ M. B. Hassan, B. A. Tama, S. Purushotham, and V. P. Janeja, "SyntheIce: A Synthe
 
 ```bibtex
 @inproceedings{hassan2026syntheice,
-  title     = {{SyntheIce}: A Synthetic Radargram Annotation Benchmark for Englacial Layer Reconstruction},
+  title     = {SyntheIce: A Synthetic Radargram Annotation Benchmark for Englacial Layer Reconstruction},
   author    = {Hassan, Muhammad Behroze and Tama, Bayu Adhi and Purushotham, Sanjay and Janeja, Vandana P.},
   booktitle = {2026 IEEE International Conference on Big Data (BigData)},
   address   = {Phoenix, AZ, USA},
