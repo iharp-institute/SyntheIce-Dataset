@@ -1,4 +1,4 @@
-# SyntheIce-Synthetic-Radargram-Annotation-Benchmark-for-Englacial-Layer-Reconstruction
+# SyntheIce: A Synthetic Radargram Annotation Benchmark For Englacial Layer Reconstruction
 SyntheIce: A Synthetic Radargram Annotation Benchmark for Englacial Layer Reconstruction. Algorithmic/procedural radargram annotation generation with pixel-exact layer masks, fragment-level annotations, and full generation metadata, built to train and evaluate layer-tracing models on Greenland ice-sheet radar data.
 
 Official code and dataset for the paper *SyntheIce: A Synthetic Radargram Annotation
@@ -21,8 +21,8 @@ truth, so models can be trained and tested against labels that are known to be c
 - **Annotation tables:** per-layer and per-fragment records
 - **Metadata:** a JSON file per sample with every generation parameter, so any sample
   can be reproduced exactly
-- **Evaluation tools:** scripts to benchmark layer-tracing models on the dataset
-
+- **TraceLink Algorithm:** Reconstructing fragments of layers back together to make layers consistent is a radargram mask.
+- **Evaluation:** The Dataset is evaluated on Consistency validation metric 'XCheck' for the wide radargrams. Tracelink is evaluated on real data annotations to reconstruct the fragments, The other metrics used are F1 score, Recall, Precision and Mean IoU.
 ## Dataset at a glance
 | Item | Value |
 |---|---|
