@@ -7,7 +7,7 @@
 Muhammad Behroze Hassan, Bayu Adhi Tama, Sanjay Purushotham, Vandana P. Janeja
 Department of Information Systems and NSF HDR Institute iHARP, University of Maryland, Baltimore County
 
-> Looking for the experiments (XCheck, TraceLink, evaluation)? They live in the companion repository: **[SyntheIce-Experiments](https://github.com/iharp-institute/SyntheIce-Synthetic-Radargram-Annotation-Benchmark-for-Englacial-Layer-Reconstruction)**.
+> Looking for the experiments (XCheck, TraceLink, evaluation)? They live in the companion repository: **[SyntheIce-Experiments](https://github.com/iharp-institute/SyntheIce-Englacial-Layer-Reconstruction)**.
 
 ---
 
