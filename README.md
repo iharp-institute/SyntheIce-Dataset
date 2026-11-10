@@ -1,6 +1,7 @@
 # SyntheIce: A Synthetic Radargram Annotation Benchmark for Englacial Layer Reconstruction
 
-**Dataset and generator** for the paper *SyntheIce: A Synthetic Radargram Annotation Benchmark for Englacial Layer Reconstruction* 
+**Dataset and generator** for the paper *SyntheIce: A Synthetic Radargram Annotation Benchmark for Englacial Layer Reconstruction* accepted in
+*Proc. 2026 IEEE International Conference on Big Data (BigData)*, Phoenix, AZ, USA, Dec. 2026
 
 
 
