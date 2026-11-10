@@ -27,7 +27,7 @@ truth, so models can be trained and tested against labels that are known to be c
 | Item | Value |
 |---|---|
 | Number of radargrams | [600] |
-| Image size | [1600 x 1600],[2000 x 3000] |
+| Radargram Image size (px) | Normal [1600 x 1600], Wide [2000 x 3000] |
 | Categories | [Close-to-synthetic, Mid-Level, Close-to-real, Noisy-Level] |
 | Layers per radargram | [Category Dependent] |
 | Format | [HDF5 / PNG + JSON] |
