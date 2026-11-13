@@ -5,16 +5,6 @@ Generates synthetic englacial-layer annotation radargrams with exact,
 per-layer ground truth: a binary mask, a layer-identity map, a
 per-layer skeleton map, and fragment / layer tables.
 
-Reproducibility note
---------------------
-The released dataset was generated with NumPy's legacy global RNG,
-seeded once (seed 42) before the first category. Every random draw
-below happens in exactly the same order as in the original notebook
-(Synthetic_G_FinalScript_April_V5.ipynb). Do not reorder the calls,
-switch to ``np.random.default_rng`` or add new random draws, or the
-regenerated files will no longer match the released ones.
-"""
-
 from __future__ import annotations
 
 import numpy as np
