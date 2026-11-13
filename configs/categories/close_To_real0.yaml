@@ -1,0 +1,28 @@
+# SyntheIce category: Close-to-Real
+# Density and breakage within the range of real Greenland radar data
+#
+# Range conventions (match the original notebook exactly):
+#   num_layers               [lo, hi)  integer, upper bound EXCLUSIVE (np.random.randint)
+#   break_prob               [lo, hi]  float, drawn once per radargram
+#   jitter_strength          [lo, hi]  float, drawn once per radargram
+#   gap_range                [lo, hi]  float, drawn per layer (vertical spacing, px)
+#   depth_range              [top, max] first layer starts in [top, top + 5]; no layer below max
+#   breaks_per_layer         [lo, hi]  integer, INCLUSIVE
+#   breaks_per_layer_length  [lo, hi]  integer px, INCLUSIVE
+#   partial_min/partial_max  integer px trimmed from each end, INCLUSIVE (each end with p = 0.5)
+
+bucket: close_To_real0
+paper_name: Close-to-Real
+
+params:
+  depth_range:              [100, 900]    # rows; layers occupy only this band
+  num_layers:               [30, 40]      # layers attempted
+  break_prob:               [0.7, 0.95]   # probability a layer is broken at all
+  gap_range:                [25, 40]      # spacing between consecutive layers, px
+  jitter_strength:          [10, 18]      # amplitude of the shared spline undulation
+  layer_undulation_scale:   1.4           # per-layer offset = U(-1,1) * scale * jitter
+  breaks_per_layer:         [3, 5]        # gaps per broken layer
+  breaks_per_layer_length:  [40, 60]      # gap length, columns
+  allow_partial_layers:     true          # trim layer ends
+  partial_min:              100           # min columns trimmed per end
+  partial_max:              400           # max columns trimmed per end

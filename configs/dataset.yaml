@@ -1,0 +1,24 @@
+# SyntheIce dataset settings (from Synthetic_G_FinalScript_April_V5.ipynb)
+#
+# The global NumPy RNG is seeded ONCE with random_seed, then the
+# categories are generated in generation_order. Changing the seed,
+# the order, or any count below changes every file that follows.
+
+random_seed: 42
+
+generation_order:          # file names in configs/categories/
+  - close_To_synthetic0
+  - mid_level0
+  - close_To_real0
+  - noisybucket0
+
+images_per_category: 150   # 600 radargrams in total
+wide_fraction: 0.25        # int(150 * 0.25) = 37 wide per category, 148 in total
+
+sizes:                     # [height (rows), width (columns)] in pixels
+  normal: [1600, 1600]
+  wide:   [2000, 3000]
+
+tilt_range_deg: [1.0, 3.0] # wide radargrams only, drawn uniformly
+
+tiles_per_wide: 4          # each wide radargram -> 4 tiles of 750 columns

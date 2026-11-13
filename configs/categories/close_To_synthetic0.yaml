@@ -1,0 +1,28 @@
+# SyntheIce category: Close-to-Synthetic
+# Clean profiles with few breaks
+#
+# Range conventions (match the original notebook exactly):
+#   num_layers               [lo, hi)  integer, upper bound EXCLUSIVE (np.random.randint)
+#   break_prob               [lo, hi]  float, drawn once per radargram
+#   jitter_strength          [lo, hi]  float, drawn once per radargram
+#   gap_range                [lo, hi]  float, drawn per layer (vertical spacing, px)
+#   depth_range              [top, max] first layer starts in [top, top + 5]; no layer below max
+#   breaks_per_layer         [lo, hi]  integer, INCLUSIVE
+#   breaks_per_layer_length  [lo, hi]  integer px, INCLUSIVE
+#   partial_min/partial_max  integer px trimmed from each end, INCLUSIVE (each end with p = 0.5)
+
+bucket: close_To_synthetic0
+paper_name: Close-to-Synthetic
+
+params:
+  depth_range:              [50, 1000]    # rows; layers occupy only this band
+  num_layers:               [15, 25]      # layers attempted
+  break_prob:               [0.5, 0.7]    # probability a layer is broken at all
+  gap_range:                [40, 70]      # spacing between consecutive layers, px
+  jitter_strength:          [6, 10]       # amplitude of the shared spline undulation
+  layer_undulation_scale:   0.9           # per-layer offset = U(-1,1) * scale * jitter
+  breaks_per_layer:         [1, 3]        # gaps per broken layer
+  breaks_per_layer_length:  [20, 40]      # gap length, columns
+  allow_partial_layers:     false         # trim layer ends
+  partial_min:              0             # min columns trimmed per end
+  partial_max:              0             # max columns trimmed per end
