@@ -149,17 +149,29 @@ Every file satisfies these checks:
 
 ```
 SyntheIce-Dataset/
-├── generator/            # SyntheIce generator (Algorithm 1)
-├── configs/              # Parameter settings for each category
+├── generator/                    # SyntheIce generator (Algorithm 1)
+│   ├── syntheice.py              #   layers, breaks, partial layers, tilt, fragments
+│   └── io.py                     #   HDF5/PNG writers, config loading, reader
+├── configs/
+│   ├── dataset.yaml              # seed, counts, image sizes, tilt range, category order
+│   └── categories/               # one parameter file per category
 ├── data/
-│   ├── tracelink_set/    # 400 radargrams, 4 categories
-│   └── xcheck_set/
-│       ├── wide/         # 150 wide radargrams
-│       └── tiles/        # 600 cropped tiles
-├── scripts/              # Regenerate the dataset, run integrity checks, compute statistics
-└── docs/                 # Figures and format details
+│   ├── full/                     # 600 radargrams, one folder per category
+│   │   └── synthetic_radargram_output_<bucket>/
+│   ├── xcheck_set/tiles/         # 592 tiles cut from the 148 wide radargrams
+│   ├── splits/                   # exact file lists used in the paper
+│   └── manifest.csv              # one row per file with its metadata
+├── scripts/
+│   ├── generate_dataset.py       # regenerate the 600 radargrams
+│   ├── crop_wide_to_tiles.py     # wide radargrams -> 4 tiles each
+│   ├── check_integrity.py        # verify every file is internally consistent
+│   ├── compute_statistics.py     # per-category statistics
+│   ├── export_tables_csv.py      # fragment / layer tables -> CSV
+│   └── make_manifest.py          # build data/manifest.csv
+├── docs/
+│   └── FORMAT.md                 # full format specification
+└── requirements.txt
 ```
-<!-- TODO: match this tree to your actual folders -->
 
 ---
 
@@ -191,18 +203,72 @@ print(meta["bucket"], meta["layers_generated"], "layers,",
       meta["total_fragments"], "fragments")
 ```
 
-Get all pixels of one fragment:
+Load one radargram:
 
 ```python
-import numpy as np
+import sys
+sys.path.insert(0, ".")
+from generator import read_h5
 
+d = read_h5("data/full/synthetic_radargram_output_close_To_real0/"
+            "synthetic_radargram_output_close_To_real003.h5")
+
+mask, layer_ids = d["mask"], d["layer_id_map"]
+fragments, layers = d["fragments"], d["layers"]
+print(d["meta"]["bucket"], d["meta"]["layers_generated"], "layers,",
+      d["meta"]["total_fragments"], "fragments")
+```
+
+Get the pixels of one fragment:
+
+```python
 layer_id, fragment_id = 1, 2
-row = fragments[(fragments[:, 0] == fragment_id) & (fragments[:, 1] == layer_id)][0]
+row = fragments[(fragments[:, 1] == layer_id) & (fragments[:, 0] == fragment_id)][0]
 _, _, c0, c1, r0, r1, _ = row
-sub = layer_ids[r0:r1 + 1, c0:c1 + 1] == layer_id   # col_end and row_max are inclusive
+pixels = layer_ids[r0:r1 + 1, c0:c1 + 1] == layer_id   # inclusive ranges
 ```
 
 ---
+
+## Scripts
+
+| Script | What it does | Example |
+|---|---|---|
+| `generate_dataset.py` | Regenerates all 600 radargrams from `configs/` | `python scripts/generate_dataset.py --out data/full` |
+| `crop_wide_to_tiles.py` | Cuts each wide radargram into 4 tiles of 750 columns | `python scripts/crop_wide_to_tiles.py --src data/full --out data/xcheck_set/tiles` |
+| `check_integrity.py` | Checks masks, IDs, tables and metadata agree in every file. Exit code 1 on failure | `python scripts/check_integrity.py data/full data/xcheck_set/tiles` |
+| `compute_statistics.py` | Per-category layer, fragment, length, width, tilt and depth statistics | `python scripts/compute_statistics.py --src data/full --subset wide` |
+| `export_tables_csv.py` | Writes the fragment and layer tables of each file as CSV | `python scripts/export_tables_csv.py data/full --out data/csv` |
+| `make_manifest.py` | One CSV row per file: category, index, type, size, tilt, counts | `python scripts/make_manifest.py data --out data/manifest.csv` |
+
+Every script takes `--help`.
+
+### Reproducing the released data
+
+```bash
+python scripts/generate_dataset.py --out data/full
+python scripts/crop_wide_to_tiles.py --src data/full --out data/xcheck_set/tiles
+python scripts/check_integrity.py data/full data/xcheck_set/tiles
+```
+
+The generator seeds NumPy's global RNG **once** (seed 42) and draws the four categories in a fixed order. A full run with the shipped configs reproduces the released files exactly. We checked this array by array against the released `close_To_real003`.
+
+**You can't regenerate a single file on its own,** because each file depends on every random draw before it. `--only <bucket>` handles this by drawing the earlier categories without writing them. Changing any config value or the category order changes every file generated after it.
+
+### What `check_integrity.py` verifies
+
+For every file:
+
+- `mask` equals `layer_id_map > 0`, and the skeleton map only marks layer pixels, with the same IDs.
+- Fragment pixel counts add up to the layer pixels, both per layer and for the whole file.
+- `num_fragments` matches the fragment table, and `(layer_id, fragment_id)` is unique.
+- Fragments of the same layer never overlap in columns.
+- Layer IDs increase from top to bottom in every column.
+- `total_fragments`, `layers_generated`, `width` and `depth` in the metadata match the data.
+
+
+---
+
 
 ## Known limitations
 
